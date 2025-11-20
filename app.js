@@ -24,64 +24,77 @@ tabs.forEach((tab) => {
   });
 });
 
-/* ================= MODO EDICIÓN ================= */
-let editMode = false;
-const toggleBtn = document.getElementById("toggleEdit");
-const editPanels = document.querySelectorAll(".edit-panel");
-const EDIT_PREFIX = "pnd_";
+/* ================= FOTO GENERAL ================= */
+// Modificación para cargar imágenes desde GitHub
+const generalPhoto = document.getElementById("generalPhoto");
+const photoURL = "https://github.com/tuusuario/tu-repositorio/ruta/a/la/imagen.jpg"; // Cambia por la URL real
 
-function loadEditableFromStorage() {
-  document.querySelectorAll("[data-editable]").forEach((el) => {
-    const key = EDIT_PREFIX + el.dataset.editable;
-    const saved = localStorage.getItem(key);
-    if (saved !== null) el.innerHTML = saved;
+if (generalPhoto) generalPhoto.src = photoURL;
+/* ================= GRÁFICAS ================= */
+
+// Asegúrate de que las gráficas tengan un tamaño fijo para que no se deformen ni sean borrosas.
+function makeChart(id, type, labels, datasets, extraOptions = {}) {
+  const canvas = document.getElementById(id);
+  if (!canvas || typeof Chart === "undefined") return;
+
+  const ctx = canvas.getContext("2d");
+  if (charts[id]) charts[id].destroy();
+
+  const baseOptions = {
+    responsive: true,
+    maintainAspectRatio: true, // Esto asegura que la gráfica no se estire
+    aspectRatio: 2,            // Ajuste de proporción
+    animation: false,
+  };
+
+  charts[id] = new Chart(ctx, {
+    type,
+    data: { labels, datasets },
+    options: { ...baseOptions, ...extraOptions },
   });
 }
-
-function bindEditableInputs() {
-  document.querySelectorAll("[data-editable]").forEach((el) => {
-    if (el.dataset.bound === "1") return;
-    el.dataset.bound = "1";
-    el.addEventListener("input", () => {
-      const key = EDIT_PREFIX + el.dataset.editable;
-      localStorage.setItem(key, el.innerHTML);
+/* ================= FOTOS DE CONSEJEROS ================= */
+// Actualiza para usar imágenes desde GitHub
+function loadConsejeroPhotos() {
+  document
+    .querySelectorAll(".consejero-foto[data-cons-photo]")
+    .forEach((img) => {
+      const id = img.dataset.consPhoto;
+      const photoURL = `https://github.com/tuusuario/tu-repositorio/ruta/a/la/foto/${id}.jpg`; // Cambia por la URL real
+      img.src = photoURL;
     });
-  });
 }
+
+/* ================= MODO EDICIÓN ================= */
+let editMode = false;  // Desactivado por defecto, no editable en modo público
 
 function applyEditMode() {
   document.querySelectorAll("[data-editable]").forEach((el) => {
-    el.contentEditable = editMode;
-    el.classList.toggle("editable-on", editMode);
+    el.contentEditable = false;  // Desactivado para que no se pueda editar
+    el.classList.remove("editable-on");  // Elimina cualquier estilo de edición
   });
-  editPanels.forEach((p) => (p.style.display = editMode ? "flex" : "none"));
 }
 
-// Si estás en GitHub Pages, desactiva edición para el público
-const isPublicHost =
-  typeof window !== "undefined" &&
-  (window.location.hostname.includes("github.io") ||
-    window.location.hostname.includes("netlify.app") ||
-    window.location.hostname.includes("vercel.app"));
+// Versión pública sin edición
+const isPublicHost = 
+  typeof window !== "undefined" && 
+  (window.location.hostname.includes("github.io") || 
+   window.location.hostname.includes("netlify.app") || 
+   window.location.hostname.includes("vercel.app"));
 
-if (toggleBtn) {
-  if (isPublicHost) {
-    // Versión pública: sin edición
-    editMode = false;
+if (isPublicHost) {
+  // Desactiva edición en el sitio público
+  editMode = false;
+  applyEditMode();
+} else {
+  // Aquí no realizamos cambios, ya que la edición estará habilitada solo en desarrollo
+  const toggleBtn = document.getElementById("toggleEdit");
+  if (toggleBtn) {
     toggleBtn.textContent = "Edición deshabilitada";
     toggleBtn.disabled = true;
     toggleBtn.classList.add("btn-disabled");
-    applyEditMode();
-  } else {
-    // Versión local (VSC / Live Server): modo edición normal
-    toggleBtn.addEventListener("click", () => {
-      editMode = !editMode;
-      toggleBtn.textContent = editMode ? "Desactivar" : "Activar";
-      applyEditMode();
-    });
   }
 }
-
 /* ================= FOTO GENERAL ================= */
 const photoInput = document.getElementById("photoInput");
 const generalPhoto = document.getElementById("generalPhoto");
