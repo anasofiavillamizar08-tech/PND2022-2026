@@ -24,7 +24,7 @@
   <!-- Encabezado principal -->
   <header class="site-header">
     <div class="header-left">
-      <img src="logo-cnp.png" alt="Logo CNP" class="cnp-logo"/>
+      <img src="https://github.com/tuusuario/tu-repositorio/ruta/a/logo-cnp.png" alt="Logo CNP" class="cnp-logo"/>
       <div class="title-wrap">
         <h1 class="headline" data-editable="titulo">
           REVISTA DE SEGUIMIENTO AL PLAN NACIONAL DE DESARROLLO 2022–2026
@@ -63,36 +63,11 @@
 
     <!-- Contenido principal -->
     <section class="content">
-
-      <!-- ============ PANEL GENERAL ============ -->
+      <!-- Paneles con contenido (Sector general, educativo, etc.) -->
       <section id="general" class="panel active">
         <div class="general-layout">
-          <!-- Columna principal -->
           <div class="general-main">
-            <div class="block block-intro">
-              <div class="section-kicker">Visión general</div>
-              <h3 class="section-title xl" data-editable="intro-titulo">
-                Introducción al seguimiento del PND
-              </h3>
-              <p class="lead" data-editable="intro-parrafo">
-                El Consejo Nacional de Planeación presenta el seguimiento al PND 2022–2026 para el periodo
-                mayo de 2023 a junio de 2024, con actualizaciones de la información recolectada entre mayo
-                y agosto de 2025. El avance general reportado se estima en 59,18%, con resultados muy
-                dispares entre sectores y territorios.
-              </p>
-            </div>
-
-            <div class="block block-prologo">
-              <h4 class="block-title" data-editable="prologo-titulo">Prólogo</h4>
-              <p data-editable="prologo-texto">
-                Esta revista sintetiza los hallazgos del seguimiento ciudadano al PND adelantado por el CNP
-                y los consejos territoriales de planeación. El propósito es ofrecer una lectura plural y
-                pedagógica sobre los avances, rezagos y alertas del Plan, enfatizando su impacto en la vida
-                cotidiana de la población y en la relación Nación–territorios.
-              </p>
-            </div>
-
-            <!-- Avance global + gráfico doughnut -->
+            <!-- Avance general + gráfico doughnut -->
             <div class="grid grid-2">
               <div class="block">
                 <div class="progress-head">
@@ -102,34 +77,20 @@
                 <div class="progress-bar">
                   <div class="progress-fill" id="globalProgress" style="width:59.18%"></div>
                 </div>
-
-                <div class="edit-panel" data-edit-panel="general">
-                  <label>Avance general (%):
-                    <input type="number" step="0.01" data-input="general-avance" value="59.18">
-                  </label>
-                  <label>Pendiente (%):
-                    <input type="number" step="0.01" data-input="general-pendiente" value="40.82">
-                  </label>
-                  <button class="btn btn-primary" data-action="save-general">Guardar</button>
-                </div>
-
-                <div class="block-note">
-                  <small data-editable="nota-general">
-                    La información de avance de los sectores se encuentra a fecha de corte de junio de 2025.
-                  </small>
-                </div>
               </div>
 
               <div class="block">
                 <div class="chart-header">
                   <h5>Distribución: avance vs por ejecutar</h5>
-                  <button class="btn btn-ghost chart-refresh" data-refresh="generalChart">↻</button>
                 </div>
                 <div class="chart-box">
                   <canvas id="generalChart" class="chart-canvas"></canvas>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
 
             <!-- Comparativo por sectores -->
             <div class="block">
